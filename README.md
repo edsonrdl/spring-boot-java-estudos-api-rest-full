@@ -36,21 +36,20 @@ git repo clone edsonrdl/api-restful-spring-boot-java
 
 3. Configure as propriedades do banco de dados no arquivo `application.properties` ou `application.yml`:
 
-spring.datasource.url=jdbc:mysql://localhost:3306/nome-do-banco
-spring.datasource.username=${DB_USERNAME_MYSQL_SPRINGBOOT_JAVA}
-spring.datasource.password=${DB_PASSWORD_MYSQL}
+- spring.datasource.url=jdbc:mysql://localhost:3306/nome-do-banco
+- spring.datasource.username=${DB_USERNAME_MYSQL_SPRINGBOOT_JAVA}
+- spring.datasource.password=${DB_PASSWORD_MYSQL}
 
-A criação de variáveis de ambiente varia dependendo do sistema operacional que você está usando. Abaixo, vou explicar como criar variáveis de ambiente em sistemas Windows e sistemas baseados em Unix (Linux/macOS).
-No Windows:
-Abra o "Painel de Controle" e vá para "Sistema e Segurança" (ou "Sistema" em algumas versões).
-Clique em "Sistema" para abrir a janela de informações do sistema.
-No painel esquerdo, clique em "Configurações avançadas do sistema".
-Na guia "Avançado", clique no botão "Variáveis de Ambiente" na parte inferior.
-Na seção "Variáveis do Sistema", clique em "Novo" para criar uma nova variável de sistema. Você pode dar um nome à variável (por exemplo, DB_USERNAME_MYSQL_SPRINGBOOT_JAVA) e atribuir o valor apropriado (por exemplo, o nome de usuário do banco de dados).
-Repita o processo para criar outra variável de sistema para a senha (por exemplo, DB_PASSWORD_MYSQL).
-Depois de criar as variáveis, clique em "OK" para fechar as janelas de configuração.
-No Linux/macOS (Unix):
-Você pode definir variáveis de ambiente temporárias diretamente no terminal ou permanentemente em um arquivo de perfil (como ~/.bashrc, ~/.bash_profile, ~/.zshrc, etc., dependendo do shell que você está usando). Vou mostrar como defini-las temporariamente e permanentemente:
+- A criação de variáveis de ambiente varia dependendo do sistema operacional que você está usando. Abaixo, vou explicar como criar variáveis de ambiente em sistemas Windows.
+- No Windows:
+- Abra o "Painel de Controle" e vá para "Sistema e Segurança" (ou "Sistema" em algumas versões).
+- Clique em "Sistema" para abrir a janela de informações do sistema.
+- No painel esquerdo, clique em "Configurações avançadas do sistema".
+- Na guia "Avançado", clique no botão "Variáveis de Ambiente" na parte inferior.
+- Na seção "Variáveis do Sistema", clique em "Novo" para criar uma nova variável de sistema. Você pode dar um nome à variável (por exemplo, DB_USERNAME_MYSQL_SPRINGBOOT_JAVA) e atribuir o valor apropriado (por exemplo, o nome de usuário do banco de dados).
+- Repita o processo para criar outra variável de sistema para a senha (por exemplo, DB_PASSWORD_MYSQL).
+- Depois de criar as variáveis, clique em "OK" para fechar as janelas de configuração.
+
 
 
 
