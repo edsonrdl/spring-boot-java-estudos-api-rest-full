@@ -22,7 +22,12 @@ Para executar este projeto em sua máquina local, siga estas etapas:
 
 1. Clone o repositório para sua máquina:
 
-git clone https://github.com/seu-usuario/seu-projeto.git
+git clone  edsonrdl/api-restful-spring-boot-java
+
+ou
+
+utilize o github desktop e adicione para fazer o clone do repositório colocando a url
+git repo clone edsonrdl/api-restful-spring-boot-java
 
 2. Configure o banco de dados MySQL:
 
