@@ -1,6 +1,7 @@
 {
      "terminal.integration.defaultProfile.windows":"Command Prompt",
     "java.configuration.updatebuildConfiguration": "interactive",
-    "java.compile.nullAnalysis.mode": "automatic"
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.configuration.updateBuildConfiguration": "interactive"
     
 }
