@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.api.restful.apirestfulspringbootjava.models.User;
+
 import com.api.restful.apirestfulspringbootjava.respositores.UserRepository;
 
 
@@ -25,6 +26,12 @@ public class UserService {
         return user.orElseThrow(()-> new RuntimeException(
             "Usuário não encontrado! Id:"+ id + ",Tipo:"+ User.class.getName()
         ));
+    }
+    @Transactional
+    public User create(User obj){
+        obj.setId(null);
+        obj=this.userRepository.save(obj);
+        return obj;
     }
    
     @Transactional
