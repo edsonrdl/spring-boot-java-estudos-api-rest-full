@@ -2,14 +2,12 @@ package com.api.restful.apirestfulspringbootjava.services;
 
 import java.util.Optional;
 
-import javax.management.RuntimeErrorException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.api.restful.apirestfulspringbootjava.models.User;
-import com.api.restful.apirestfulspringbootjava.respositores.TaskRepository;
 import com.api.restful.apirestfulspringbootjava.respositores.UserRepository;
 
 
@@ -20,8 +18,6 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private TaskRepository taskRepository;
 
     //Método para Buscar pelo identificador 
     public User findById(long id){
@@ -30,13 +26,7 @@ public class UserService {
             "Usuário não encontrado! Id:"+ id + ",Tipo:"+ User.class.getName()
         ));
     }
-    @Transactional
-    public User create(User obj){
-        obj.setId(null);
-        obj =this.userRepository.save(obj);
-        this.taskRepository.saveAll(obj.getTasks());
-        return obj;
-    }
+   
     @Transactional
     public User update(User obj){
         User newObj=findById(obj.getId());
