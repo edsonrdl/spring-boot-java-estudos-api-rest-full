@@ -1,5 +1,6 @@
 package com.api.restful.apirestfulspringbootjava.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,11 @@ public class TaskService {
         return task.orElseThrow(()-> new RuntimeException(
             "Tarefa não encontrada! id:"+ id + ",Tipos :" + Task.class.getName()
         ));
+    }
+    
+    public List<Task> findAllByUserId(Long userId){
+        List<Task> tasks=this.taskRepository.findByUser_Id(userId);
+        return tasks;
     }
 
     @Transactional
