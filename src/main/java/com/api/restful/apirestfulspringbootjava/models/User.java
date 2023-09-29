@@ -9,7 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -18,8 +17,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 
 import java.util.ArrayList;
@@ -52,8 +54,10 @@ public class User {
     @NotEmpty(groups = CreateUser.class, message = "O sobrenome não pode estar vazio")
     private String surname;
 
-    @Column(name = "cpf", length = 11, nullable = false, unique = true)
-    @Size(groups = CreateUser.class, min = 11, max = 11, message = "O CPF deve ter exatamente 11 dígitos")
+    @Column(name = "cpf", length = 15, nullable = false, unique = true)
+    @Size(groups = CreateUser.class, min = 11, max = 15, message = "O CPF deve ter exatamente 11 dígitos")
+    @NotBlank(groups = { CreateUser.class},message = "O CPF é obrigatório")
+    @Pattern(groups = { CreateUser.class},regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "O CPF deve estar no formato ***.***.***-**")
     @Pattern(groups = CreateUser.class, regexp = "^[0-9]*$", message = "O CPF deve conter apenas números")
     private String cpf;
 
@@ -64,18 +68,22 @@ public class User {
     private String email;
 
     @Column(name = "phone_number", length = 15)
+    @Pattern(groups = { CreateUser.class},regexp = "\\+55 \\d{2} 9\\d{4}-\\d{4}", message = "O número de telefone deve estar no formato +55 DDD 9****-****")
+    @Pattern(regexp = "^[^\\s]+$", message = "O número de telefone não pode conter espaços")
     @Size(groups = { CreateUser.class,
             UpdateUser.class }, max = 15, message = "O número de telefone não pode ter mais de 15 caracteres")
     private String phoneNumber;
 
     @Column(name = "date_of_birth")
-    @Past(groups = { CreateUser.class,
-            UpdateUser.class }, message = "A data de nascimento não é válida ,tem que ser no passado")
-    @NotEmpty(groups = { CreateUser.class, UpdateUser.class }, message = "A data de nascimento não pode estar vazia")
+    @Past(groups = { CreateUser.class}, message = "A data de nascimento não é válida ,tem que ser no passado")
+    @Pattern(groups = { CreateUser.class},regexp = "\\d{4}-\\d{2}\\-d{2}", message = "Espera datas no formato yyyy-MM-dd")
+    @NotEmpty(groups = { CreateUser.class}, message = "A data de nascimento não pode estar vazia")
     private LocalDate dateOfBirth;
 
     @JsonProperty(access = Access.WRITE_ONLY) // A senha só pode ser escrita e não retornada
     @Column(name = "password")
+    @NotBlank(groups = { CreateUser.class,
+            UpdateUser.class },message = "O password é obrigatório")
     @Size(groups = { CreateUser.class,
             UpdateUser.class }, min = 6, max = 25, message = "O Password deve ter mais de 6 caracteres e menor de 25")
     @NotEmpty(groups = { CreateUser.class,
@@ -164,8 +172,7 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
- 
-    @JsonIgnore
+
     public List<Task> getTasks() {
         return this.tasks;
     }
