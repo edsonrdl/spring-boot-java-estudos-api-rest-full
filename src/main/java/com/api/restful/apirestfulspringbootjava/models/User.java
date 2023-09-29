@@ -2,16 +2,18 @@ package com.api.restful.apirestfulspringbootjava.models;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import jakarta.persistence.Column;
+
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
-import javax.persistence.Table;
+import jakarta.persistence.Entity;
+
+import jakarta.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.validation.constraints.NotEmpty;
@@ -20,9 +22,9 @@ import javax.validation.constraints.Past;
 import java.util.Objects;
 
 @Entity // Definir que a class user é uma entidade com o nome da tabela =users
-@Table(name = "users")
+@Table(name = User.TABLE_NANE)
 public class User {
-    public static final String TABLE_NANE = "users";
+    public static final String TABLE_NANE = "user";
 
     public interface CreateUser {
     }
@@ -36,9 +38,9 @@ public class User {
     private Long id;
 
     @Column(name = "name", length = 15, nullable = false, unique = true)
-    private String name;
     @Size(groups = CreateUser.class, min = 3, max = 15, message = "O nome não pode ter mais de 15 caracteres e menos que 3")
     @NotEmpty(groups = CreateUser.class, message = "O nome não pode estar vazio")
+    private String name;
 
     @Column(name = "surname", length = 70, nullable = false, unique = true)
     @Size(groups = CreateUser.class, max = 70, message = "O sobrenome não pode ter mais de 70 caracteres")
