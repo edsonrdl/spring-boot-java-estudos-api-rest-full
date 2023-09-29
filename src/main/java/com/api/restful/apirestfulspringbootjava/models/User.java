@@ -7,6 +7,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -19,12 +20,15 @@ import javax.validation.constraints.Size;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Past;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity // Definir que a class user é uma entidade com o nome da tabela =users
-@Table(name = User.TABLE_NANE)
+@Table(name = User.TABLE_NAME)
 public class User {
-    public static final String TABLE_NANE = "user";
+    public static final String TABLE_NAME = "user";
 
     public interface CreateUser {
     }
@@ -47,7 +51,6 @@ public class User {
     @NotEmpty(groups = CreateUser.class, message = "O sobrenome não pode estar vazio")
     private String surname;
 
-    @Id
     @Column(name = "cpf", length = 11, nullable = false, unique = true)
     @Size(groups = CreateUser.class, min = 11, max = 11, message = "O CPF deve ter exatamente 11 dígitos")
     @Pattern(groups = CreateUser.class, regexp = "^[0-9]*$", message = "O CPF deve conter apenas números")
@@ -78,7 +81,9 @@ public class User {
             UpdateUser.class }, message = "A password de nascimento não pode estar vazia")
     private String password;
 
-    // private List<Task> task= new ArrayList<Task>();
+    @OneToMany(mappedBy = "user") // Um usuário pode ter várias task (Cardinalidade)
+    private List<Task> tasks= new ArrayList<Task>();
+    
     public User() {
 
     }
@@ -157,6 +162,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Task> getTasks() {
+        return this.tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     // Essas implementações personalizadas de equals e hashCode permitem que você
