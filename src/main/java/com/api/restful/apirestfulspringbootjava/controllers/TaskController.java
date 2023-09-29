@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.api.restful.apirestfulspringbootjava.models.Task;
 import com.api.restful.apirestfulspringbootjava.services.TaskService;
+import com.api.restful.apirestfulspringbootjava.services.UserService;
 
 @RestController
 @RequestMapping("/task")
@@ -27,6 +28,9 @@ public class TaskController {
 
     @Autowired
     private TaskService taskService;
+    
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Task> findById(@PathVariable long id) {
@@ -36,6 +40,7 @@ public class TaskController {
 
     @GetMapping("/{id}/{userId}")
     public ResponseEntity<List<Task>> findAllByUserId(@PathVariable long userId){
+        this.userService.findById(userId);
         List<Task> objs=this.taskService.findAllByUserId(userId);
         return ResponseEntity.ok().body(objs);
     }
