@@ -15,6 +15,12 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -26,10 +32,14 @@ import javax.validation.constraints.Past;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity // Definir que a class user é uma entidade com o nome da tabela =users
 @Table(name = User.TABLE_NAME)
+@AllArgsConstructor //Vai criar o construtor
+@NoArgsConstructor //Vai criar o construtor vazio 
+@Getter //Vai Criar os Métodos Get
+@Setter  //Vai Criar os Métodos Set
+@EqualsAndHashCode //As funções de verificações
 public class User {
     public static final String TABLE_NAME = "user";
 
@@ -90,96 +100,104 @@ public class User {
             UpdateUser.class }, message = "A password de nascimento não pode estar vazia")
     private String password;
 
+
+    // @OneToMany(mappedBy = "user") // Um usuário pode ter várias task (Cardinalidade)
+    // private List<Task> tasks= new ArrayList<Task>();
+
+    //Utilizando o lombok para não
     @OneToMany(mappedBy = "user") // Um usuário pode ter várias task (Cardinalidade)
+    @JsonProperty(access = Access.WRITE_ONLY) //para não aparecer as tarefas ao buscar usuário e deixar aparecer no model task quando eu quiser ver as tarefas do usuário
     private List<Task> tasks= new ArrayList<Task>();
     
-    public User() {
 
-    }
+    //Código não necessário ,utilizar o lombok já cria os métodos de acesso e construtores
+    // public User() {
 
-    public User(Long id, String name, String surname, String cpf, String email, String phoneNumber,
-            LocalDate dateOfBirth, String password) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.cpf = cpf;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.dateOfBirth = dateOfBirth;
-        this.password = password;
-    }
+    // }
 
-    public Long getId() {
-        return this.id;
-    }
+    // public User(Long id, String name, String surname, String cpf, String email, String phoneNumber,
+    //         LocalDate dateOfBirth, String password) {
+    //     this.id = id;
+    //     this.name = name;
+    //     this.surname = surname;
+    //     this.cpf = cpf;
+    //     this.email = email;
+    //     this.phoneNumber = phoneNumber;
+    //     this.dateOfBirth = dateOfBirth;
+    //     this.password = password;
+    // }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    // public Long getId() {
+    //     return this.id;
+    // }
 
-    public String getName() {
-        return this.name;
-    }
+    // public void setId(Long id) {
+    //     this.id = id;
+    // }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    // public String getName() {
+    //     return this.name;
+    // }
 
-    public String getSurname() {
-        return this.surname;
-    }
+    // public void setName(String name) {
+    //     this.name = name;
+    // }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
+    // public String getSurname() {
+    //     return this.surname;
+    // }
 
-    public String getCpf() {
-        return this.cpf;
-    }
+    // public void setSurname(String surname) {
+    //     this.surname = surname;
+    // }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
+    // public String getCpf() {
+    //     return this.cpf;
+    // }
 
-    public String getEmail() {
-        return this.email;
-    }
+    // public void setCpf(String cpf) {
+    //     this.cpf = cpf;
+    // }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    // public String getEmail() {
+    //     return this.email;
+    // }
 
-    public String getPhoneNumber() {
-        return this.phoneNumber;
-    }
+    // public void setEmail(String email) {
+    //     this.email = email;
+    // }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+    // public String getPhoneNumber() {
+    //     return this.phoneNumber;
+    // }
 
-    public LocalDate getDateOfBirth() {
-        return this.dateOfBirth;
-    }
+    // public void setPhoneNumber(String phoneNumber) {
+    //     this.phoneNumber = phoneNumber;
+    // }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
+    // public LocalDate getDateOfBirth() {
+    //     return this.dateOfBirth;
+    // }
 
-    public String getPassword() {
-        return this.password;
-    }
+    // public void setDateOfBirth(LocalDate dateOfBirth) {
+    //     this.dateOfBirth = dateOfBirth;
+    // }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    // public String getPassword() {
+    //     return this.password;
+    // }
 
-    public List<Task> getTasks() {
-        return this.tasks;
-    }
+    // public void setPassword(String password) {
+    //     this.password = password;
+    // }
 
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
-    }
+    // public List<Task> getTasks() {
+    //     return this.tasks;
+    // }
+
+    // public void setTasks(List<Task> tasks) {
+    //     this.tasks = tasks;
+    // }
 
     // Essas implementações personalizadas de equals e hashCode permitem que você
     // controle como os objetos da classe User são comparados e armazenados em
@@ -187,23 +205,23 @@ public class User {
     // Isso é útil quando você precisa lidar com objetos personalizados em seu
     // código.
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this)
-            return true;
-        if (obj == null)
-            return false;
-        if (!(obj instanceof User))
-            return false;
-        User other = (User) obj;
-        if (this.id == null)
-            if (other.id != null)
-                return false;
-            else if (!this.id.equals(other.id))
-                return false;
-        return Objects.equals(this.id, other.id) && Objects.equals(this.name, other.name)
-                && Objects.equals(this.password, other.password);
-    }
+    // @Override
+    // public boolean equals(Object obj) {
+    //     if (obj == this)
+    //         return true;
+    //     if (obj == null)
+    //         return false;
+    //     if (!(obj instanceof User))
+    //         return false;
+    //     User other = (User) obj;
+    //     if (this.id == null)
+    //         if (other.id != null)
+    //             return false;
+    //         else if (!this.id.equals(other.id))
+    //             return false;
+    //     return Objects.equals(this.id, other.id) && Objects.equals(this.name, other.name)
+    //             && Objects.equals(this.password, other.password);
+    // }
     // equals(Object obj):
 
     // O método equals é usado para determinar se dois objetos da mesma classe são
@@ -228,13 +246,13 @@ public class User {
     // É importante notar que a implementação usa a verificação nula para evitar
     // exceções de NullPointerException ao acessar campos nulos.
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + (this.id == null ? 0 : this.hashCode());
-        return result;
-    }
+    // @Override
+    // public int hashCode() {
+    //     final int prime = 31;
+    //     int result = 1;
+    //     result = prime * result + (this.id == null ? 0 : this.hashCode());
+    //     return result;
+    // }
     // ashCode():
 
     // O método hashCode é usado para calcular um valor numérico que representa o
