@@ -12,36 +12,33 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.api.restful.apirestfulspringbootjava.models.Task;
+import com.api.restful.apirestfulspringbootjava.models.projection.TaskProjection;
 import com.api.restful.apirestfulspringbootjava.services.TaskService;
-import com.api.restful.apirestfulspringbootjava.services.UserService;
 
 @RestController
 @RequestMapping("/task")
 @Validated
 public class TaskController {
 
-    @Autowired
+   @Autowired
     private TaskService taskService;
-    
-    @Autowired
-    private UserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> findById(@PathVariable long id) {
-        Task objs = this.taskService.findById(id);
-        return ResponseEntity.ok(objs);
+    public ResponseEntity<Task> findById(@PathVariable Long id) {
+        Task obj = this.taskService.findById(id);
+        return ResponseEntity.ok(obj);
     }
 
-    @GetMapping("/{id}/{userId}")
-    public ResponseEntity<List<Task>> findAllByUserId(@PathVariable long userId){
-        this.userService.findById(userId);
-        List<Task> objs=this.taskService.findAllByUserId(userId);
+    @GetMapping("/user")
+    public ResponseEntity<List<TaskProjection>> findAllByUser() {
+        List<TaskProjection> objs = this.taskService.findAllByUser();
         return ResponseEntity.ok().body(objs);
     }
 
@@ -49,21 +46,21 @@ public class TaskController {
     @Validated
     public ResponseEntity<Void> create(@Valid @RequestBody Task obj) {
         this.taskService.create(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     @Validated
-    public ResponseEntity<Void> update(@Valid @RequestBody Task obj, @PathVariable long id) {
+    public ResponseEntity<Void> update(@Valid @RequestBody Task obj, @PathVariable Long id) {
         obj.setId(id);
         this.taskService.update(obj);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
-    @Validated
-    public ResponseEntity<Void> delete9(@PathVariable long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.taskService.delete(id);
         return ResponseEntity.noContent().build();
     }

@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.api.restful.apirestfulspringbootjava.models.User;
-import com.api.restful.apirestfulspringbootjava.models.User.CreateUser;
-import com.api.restful.apirestfulspringbootjava.models.User.UpdateUser;
+import com.api.restful.apirestfulspringbootjava.models.dto.UserCreateDTO;
+import com.api.restful.apirestfulspringbootjava.models.dto.UserUpdateDTO;
+import com.api.restful.apirestfulspringbootjava.security.UserSpringSecurity;
 import com.api.restful.apirestfulspringbootjava.services.UserService;
 
 @RestController
@@ -38,18 +40,19 @@ public class UserController {
     }
 
     @PostMapping
-    @Validated(CreateUser.class)
-    public ResponseEntity<Void> create(@Valid @RequestBody User obj){
-        this.userService.create(obj);
-        URI uri=ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+    public ResponseEntity<Void> create(@Valid @RequestBody UserCreateDTO obj) {
+        User user = this.userService.fromDTO(obj);
+        User newUser = this.userService.create(user);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(newUser.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")
-    @Validated(UpdateUser.class)
-    public ResponseEntity<Void> update(@Valid @RequestBody User obj,@PathVariable long id){
+    public ResponseEntity<Void> update(@Valid @RequestBody UserUpdateDTO obj,@PathVariable long id){
         obj.setId(id);
-        this.userService.update(obj);
+        User user=this.userService.fromDTO(obj);
+        this.userService.update(user);
         return ResponseEntity.noContent().build();
 
     }
@@ -57,6 +60,13 @@ public class UserController {
 @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id){
         this.userService.delete(id);;
-        return ResponseEntity.noContent().build()
-;    }
+        return ResponseEntity.noContent().build();
+}
+public static UserSpringSecurity authenticated(){
+    try {
+        return(UserSpringSecurity)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    } catch (Exception e) {
+       return null;
+    }
+}
 }

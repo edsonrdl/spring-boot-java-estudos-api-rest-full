@@ -1,8 +1,7 @@
 package com.api.restful.apirestfulspringbootjava.models;
 
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import jakarta.persistence.Column;
@@ -14,18 +13,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 @Entity //Define a entidade no Banco de Dados
 @Table(name = Task.TABLE_NAME)
 @AllArgsConstructor //Vai criar o construtor
 @NoArgsConstructor //Vai criar o construtor vazio 
-@Getter //Vai Criar os Métodos Get
-@Setter  //Vai Criar os Métodos Set
-@EqualsAndHashCode //As funções de verificações
+@Data
 public class Task {
     public static final String TABLE_NAME = "task";
 
@@ -39,8 +33,9 @@ public class Task {
     private User user;
 
     @Column(name = "description", length = 255, nullable = false)
-    @NotNull
-    @NotEmpty(message = "A descrição  não pode estar vazio")
+    // @NotNull
+    // @NotEmpty(message = "A descrição  não pode estar vazio")
+    @NotBlank //Funciona como o NotNull e o NotEmpty ,mas apenas com String
     @Size(min = 1, max = 255, message = "Mínimo de 1 caracteres e máximo de 255")
     private String description;
 
