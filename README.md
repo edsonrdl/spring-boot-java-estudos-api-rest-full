@@ -15,6 +15,7 @@ Este projeto tem como objetivo criar uma API RESTful para [descreva brevemente o
 - **MySQL:** O banco de dados relacional MySQL é usado para armazenar e gerenciar os dados da aplicação.
 
 - **HeidiSQL:** O HeidiSQL é uma ferramenta de código aberto que usamos para administrar o banco de dados MySQL. Facilita a criação de tabelas, consultas SQL e a visualização de dados.
+- Docker compose:** Ferramenta para subir imagens 
 
 ## Configuração
 
@@ -64,16 +65,17 @@ git repo clone edsonrdl/api-restful-spring-boot-java
 
 
 4. Execute o aplicativo Spring Boot:
-
-./mvnw spring-boot:run
-ou 
-Utilizando o run (Extensão do vs code) 
+ mvn clean install
 
 
-5. Acesse a API localmente em:
+
+
+6. Acesse a API localmente em:
 
 http://localhost:8080
 
+7. Iniciar a aplicação utilizando Docker-Compose:
+$ docker-compose up
 
 ## Uso
 
