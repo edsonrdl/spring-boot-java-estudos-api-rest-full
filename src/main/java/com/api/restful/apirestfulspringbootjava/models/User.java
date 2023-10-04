@@ -58,7 +58,7 @@ public class User {
         @NotBlank(message = "O sobrenome é obritarório e não pode estar vazio")
         private String surname;
 
-        @Column(name = "username", length = 100, nullable = false, unique = true)
+        @Column(name = "username", length = 100, nullable = false)
         @Size(min = 15, max = 100, message = "O Nome de usuário  não pode ter mais de 100 caracteres e menos que 15")
         @NotBlank(message = "O Nome de usuário é obrigatório e não pode estar vazio")
         private String username;
@@ -76,7 +76,7 @@ public class User {
         @NotEmpty(message = "O email não pode estar vazio")
         private String email;
 
-        @Column(name = "phone_number", length = 15)
+        @Column(name = "phone_number", length = 15,nullable = false, unique = true)
         @Pattern(regexp = "\\+55 \\d{2} 9\\d{4}-\\d{4}", message = "O número de telefone deve estar no formato +55 DDD 9****-****")
         @Pattern(regexp = "^[^\\s]+$", message = "O número de telefone não pode conter espaços")
         @Size(max = 15, message = "O número de telefone não pode ter mais de 15 caracteres")
