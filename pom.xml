@@ -24,7 +24,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<finalName>tarefasdeusuarios</finalName>
+		<finalName>tarefasdeusuariosapp</finalName>
 	</build>
 	<dependencies>
 <dependency>
