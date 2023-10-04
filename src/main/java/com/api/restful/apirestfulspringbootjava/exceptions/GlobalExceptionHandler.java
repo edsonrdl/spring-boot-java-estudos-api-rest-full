@@ -9,6 +9,7 @@ import javax.validation.ConstraintViolationException;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -36,8 +37,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler imple
 
     @Value("${server.error.include-exception}")
     private boolean printStackTrace;
-
-    @ExceptionHandler(MethodArgumentNotValidException.class) //@ExceptionHandler é usado para declarar um método que manipula exceções específicas lançadas em um controlador Spring MVC.
+    @Order(1)//@ExceptionHandler é usado para declarar um método que manipula exceções específicas lançadas em um controlador Spring MVC.
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException methodArgumentNotValidException,

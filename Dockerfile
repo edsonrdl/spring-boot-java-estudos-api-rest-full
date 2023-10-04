@@ -1,4 +1,4 @@
-FROM maven:3.9.4-openjdk-17
+FROM maven:3.8.4-openjdk-17
 
 ENV PROJECT_HOME /usr/src/tarefasdeusuariosapp
 ENV JAR_NAME tarefasdeusuariosapp.jar

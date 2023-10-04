@@ -37,9 +37,9 @@ import java.util.stream.Collectors;
 
 @Entity // Definir que a class user é uma entidade com o nome da tabela =users
 @Table(name = User.TABLE_NAME)
-@AllArgsConstructor 
-@NoArgsConstructor 
-@Data 
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class User {
         public static final String TABLE_NAME = "user";
 
@@ -49,49 +49,49 @@ public class User {
         private Long id;
 
         @Column(name = "name", length = 15, nullable = false, unique = false)
-        @Size( min = 3, max = 15, message = "O nome não pode ter mais de 15 caracteres e menos que 3")
-        @NotBlank( message = "O Nome é obrigatório e não pode estar vazio")
+        @Size(min = 3, max = 15, message = "O nome não pode ter mais de 15 caracteres e menos que 3")
+        @NotBlank(message = "O Nome é obrigatório e não pode estar vazio")
         private String name;
 
         @Column(name = "surname", length = 70, nullable = false, unique = true)
-        @Size( max = 70, message = "O sobrenome não pode ter mais de 70 caracteres")
+        @Size(max = 70, message = "O sobrenome não pode ter mais de 70 caracteres")
         @NotBlank(message = "O sobrenome é obritarório e não pode estar vazio")
         private String surname;
 
         @Column(name = "username", length = 100, nullable = false, unique = true)
-        @Size( min = 15, max = 100, message = "O Nome de usuário  não pode ter mais de 100 caracteres e menos que 15")
-        @NotBlank( message = "O Nome de usuário é obrigatório e não pode estar vazio")
+        @Size(min = 15, max = 100, message = "O Nome de usuário  não pode ter mais de 100 caracteres e menos que 15")
+        @NotBlank(message = "O Nome de usuário é obrigatório e não pode estar vazio")
         private String username;
 
         @Column(name = "cpf", length = 15, nullable = false, unique = true)
-        @Size( min = 11, max = 15, message = "O CPF deve ter exatamente 11 dígitos")
-        @NotBlank( message = "O CPF é obrigatório")
-        @Pattern( regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "O CPF deve estar no formato ***.***.***-**")
-        @Pattern( regexp = "^[0-9]*$", message = "O CPF deve conter apenas números")
+        @Size(min = 11, max = 15, message = "O CPF deve ter exatamente 11 dígitos")
+        @NotBlank(message = "O CPF é obrigatório")
+        @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "O CPF deve estar no formato ***.***.***-**")
+        @Pattern(regexp = "^[0-9]*$", message = "O CPF deve conter apenas números")
         private String cpf;
 
         @Column(name = "email", length = 100, nullable = false, unique = true)
-        @Size( max = 100, message = "O email não pode ter mais de 100 caracteres")
-        @Email( message = "O email deve ser válido")
-        @NotEmpty( message = "O email não pode estar vazio")
+        @Size(max = 100, message = "O email não pode ter mais de 100 caracteres")
+        @Email(message = "O email deve ser válido")
+        @NotEmpty(message = "O email não pode estar vazio")
         private String email;
 
         @Column(name = "phone_number", length = 15)
-        @Pattern( regexp = "\\+55 \\d{2} 9\\d{4}-\\d{4}", message = "O número de telefone deve estar no formato +55 DDD 9****-****")
+        @Pattern(regexp = "\\+55 \\d{2} 9\\d{4}-\\d{4}", message = "O número de telefone deve estar no formato +55 DDD 9****-****")
         @Pattern(regexp = "^[^\\s]+$", message = "O número de telefone não pode conter espaços")
         @Size(max = 15, message = "O número de telefone não pode ter mais de 15 caracteres")
         private String phoneNumber;
 
         @Column(name = "date_of_birth")
-        @Past( message = "A data de nascimento não é válida ,tem que ser no passado")
-        @Pattern( regexp = "\\d{4}-\\d{2}\\-d{2}", message = "Espera datas no formato yyyy-MM-dd")
-        @NotEmpty(  message = "A data de nascimento não pode estar vazia")
+        @Past(message = "A data de nascimento não é válida ,tem que ser no passado")
+        @Pattern(regexp = "\\d{4}-\\d{2}\\-d{2}", message = "Espera datas no formato yyyy-MM-dd")
+        @NotEmpty(message = "A data de nascimento não pode estar vazia")
         private LocalDate dateOfBirth;
 
         @JsonProperty(access = Access.WRITE_ONLY) // A senha só pode ser escrita e não retornada
         @Column(name = "password")
-        @NotBlank( message = "O password é obrigatóri e não pode ser nulo ou vazio")
-        @Size( min = 6, max = 25, message = "O Password deve ter mais de 6 caracteres e menor de 25")
+        @NotBlank(message = "O password é obrigatóri e não pode ser nulo ou vazio")
+        @Size(min = 6, max = 25, message = "O Password deve ter mais de 6 caracteres e menor de 25")
         private String password;
 
         // @OneToMany(mappedBy = "user") // Um usuário pode ter várias task
@@ -101,14 +101,13 @@ public class User {
         // Utilizando o lombok para não
         @OneToMany(mappedBy = "user") // Um usuário pode ter várias task (Cardinalidade)
         @JsonProperty(access = Access.WRITE_ONLY) // para não aparecer as tarefas ao buscar usuário e deixar aparecer no
-         private List<Task> tasks = new ArrayList<Task>();// model task quando eu quiser ver as tarefas do usuário
-       
+        private List<Task> tasks = new ArrayList<Task>();// model task quando eu quiser ver as tarefas do usuário
 
-         @Column(name = "profile", nullable = false)
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_profile")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Set<Integer> profiles = new HashSet<>();
+        @Column(name = "profile", nullable = false)
+        @ElementCollection(fetch = FetchType.EAGER)
+        @CollectionTable(name = "user_profile")
+        @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+        private Set<Integer> profiles = new HashSet<>();
 
         public Set<ProfileEnum> getProfiles() {
                 return this.profiles.stream().map(x -> ProfileEnum.toEnum(x)).collect(Collectors.toSet());
