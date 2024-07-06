@@ -8,11 +8,11 @@
 		<version>3.1.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.api.restful</groupId>
-	<artifactId>api-restful-spring-boot-java</artifactId>
+	<groupId>com.api.todo</groupId>
+	<artifactId>to-do-list</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>api-restful-spring-boot-java</name>
-	<description>Demo project for Spring Boot</description>
+	<name>to-do-list</name>
+	<description>To-Do List Project</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -24,7 +24,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<finalName>tarefasdeusuariosapp</finalName>
+		  <finalName>to-do-list</finalName>
 	</build>
 	<dependencies>
 <dependency>
