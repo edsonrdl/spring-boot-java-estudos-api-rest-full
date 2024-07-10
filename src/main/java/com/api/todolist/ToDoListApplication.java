@@ -10,11 +10,11 @@ public class ToDoListApplication  {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ToDoListApplication .class, args);
-		System.out.print("Olá,mundo");
+		System.out.print("Iniciado!");
 	}
 
 	public void doSomething() {
-        logger.error("Isso é uma mensagem de erro.");
+        logger.error("Erro ao iniciar projeto.");
     }
 
 }

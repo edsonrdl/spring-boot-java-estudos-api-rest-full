@@ -37,7 +37,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler imple
 
     @Value("${server.error.include-exception}")
     private boolean printStackTrace;
-    @Order(1)//@ExceptionHandler é usado para declarar um método que manipula exceções específicas lançadas em um controlador Spring MVC.
+    @Order(1)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException methodArgumentNotValidException,

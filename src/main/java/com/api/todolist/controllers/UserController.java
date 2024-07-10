@@ -31,12 +31,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    //@PathVariable vai dizer que a variável que está sendo recebida em @GetMapping("/{id}") é o long id de User
     @GetMapping("/{id}")
     public ResponseEntity<User> findById(@PathVariable long id){
         User obj=this.userService.findById(id);
         return ResponseEntity.ok().body(obj);
-        //Retornar a resposta statusCode e o corpo da resposta com o objeto 
     }
 
     @PostMapping

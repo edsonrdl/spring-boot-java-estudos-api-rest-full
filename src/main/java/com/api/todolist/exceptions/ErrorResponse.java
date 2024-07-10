@@ -17,9 +17,13 @@ import lombok.Setter;
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ErrorResponse {
+
     private final int status;
+
     private final String message;
+
     private String stackTrace;
+    
     private List<ValidationError> errors;
     
 
